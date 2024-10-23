@@ -68,14 +68,58 @@
 
     <section id="login">
         <h2>Login</h2>
-        <form id="loginForm">
+        <form id="loginForm" onsubmit="handleLogin(event)">
             <label for="username">Usuário:</label>
-            <input type="text" id="username" name="username"><br><br>
+            <input type="text" id="username" name="username" required><br><br>
             <label for="password">Senha:</label>
-            <input type="password" id="password" name="password"><br><br>
+            <input type="password" id="password" name="password" required><br><br>
             <button class="login-button" type="submit">Entrar</button>
         </form>
+        <h2>Registrar</h2>
+        <form id="registerForm" onsubmit="handleRegister(event)">
+            <label for="newUsername">Usuário:</label>
+            <input type="text" id="newUsername" name="username" required><br><br>
+            <label for="newPassword">Senha:</label>
+            <input type="password" id="newPassword" name="password" required><br><br>
+            <button class="register-button" type="submit">Registrar</button>
+        </form>
     </section>
+    
+    <script>
+        async function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+    
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+    
+            const message = await response.text();
+            alert(message);
+        }
+    
+        async function handleRegister(event) {
+            event.preventDefault();
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPassword').value;
+    
+            const response = await fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+    
+            const message = await response.text();
+            alert(message);
+        }
+    </script>    
 
     <footer>
         <p>© 2024 Finance360. Todos os direitos reservados.</p>
